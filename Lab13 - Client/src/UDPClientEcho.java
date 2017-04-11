@@ -13,16 +13,19 @@ public class UDPClientEcho {
 	public static void main(String args[]){
 		// First open up a socket.
 		try {
+			//Create the UDP socket. 
 			socket = new DatagramSocket();
 			byte[] message = new String("Test!").getBytes();
 			InetAddress address = InetAddress.getByName("localhost");
 			DatagramPacket sendPacket = new DatagramPacket(message, message.length, address, 1336);
 			
+			//Send the packet through the socket.
 			socket.send(sendPacket);
 			
 			byte[] recievedMessage = new byte[250];
 			DatagramPacket recievePacket = new DatagramPacket(recievedMessage, recievedMessage.length);
 			
+			//Receive a message.
 			socket.receive(recievePacket);
 			
 			String finalMessage = new String(recievePacket.getData());
@@ -41,6 +44,8 @@ public class UDPClientEcho {
 			System.out.println("Input or output error..");
 			e.printStackTrace();
 		} finally {
+			
+			// Close the socket to prevent memory leaks
 			socket.close();
 		}
 	}
